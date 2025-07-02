@@ -1,0 +1,125 @@
+﻿Compare 
+🔸 1. Content-Based Filtering
+ 👉 Recommends items that are similar to what you like based on content.
+The system looks at the content features of items you’ve liked before (e.g., text descriptions), then finds other items with similar content to recommend.
+📘 Example:
+You watched a movie described as "A young wizard fights against evil."
+➡️ The system recommends another movie with similar keywords like "magic," "young," and "battle."
+✅ Suitable datasets:
+Datasets with rich item descriptions or tags (movie plots, book summaries, product details, etc.)
+You need text descriptions or tags for each item.
+________________
+
+
+🔸 2. Collaborative Filtering
+ 👉 Recommends items that people with similar tastes like.
+The system doesn’t look at item content but focuses on who likes what. It finds users with similar preferences and recommends items they liked that you haven’t seen.
+👥 Example:
+You and user Xiao Ming both like "Harry Potter" and "Twilight."
+➡️ Xiao Ming also likes "Lord of the Rings," which you haven’t watched.
+➡️ The system recommends "Lord of the Rings" to you.
+✅ Suitable datasets:
+Datasets with user-item interactions such as ratings, likes, or bookmarks.
+Example: user1 likes movie A, user2 likes A and B → recommend B to user1.
+
+
+Database
+使用者ID,劇名,是否喜歡
+user1,鬼怪,👍
+user1,太陽的後裔,👍
+user1,我的海洋天堂,👎
+user2,太陽的後裔,👍
+user2,慶餘年,👍
+user2,皓鑭傳,👎
+user3,鬼怪,👎
+user3,如懿傳,👍
+user3,醉玲瓏,👍
+user4,慶餘年,👍
+user4,鬼怪,👍
+user4,來自星星的你,👎
+user5,太陽的後裔,👍
+user5,慶餘年,👎
+user5,醉玲瓏,👍
+user6,來自星星的你,👍
+user6,我的海洋天堂,👍
+user6,鬼怪,👎
+user7,鬼怪,👍
+user7,皓鑭傳,👎
+user7,太陽的後裔,👍
+user8,慶餘年,👍
+user8,鬼怪,👎
+user8,我的海洋天堂,👍
+user9,來自星星的你,👍
+user9,如懿傳,👎
+user9,醉玲瓏,👍
+user10,鬼怪,👍
+user10,太陽的後裔,👎
+user10,慶餘年,👍
+user11,醉玲瓏,👍
+user11,我的海洋天堂,👎
+user11,皓鑭傳,👍
+user12,太陽的後裔,👍
+user12,鬼怪,👍
+user12,來自星星的你,👎
+user13,慶餘年,👍
+user13,我的海洋天堂,👎
+user13,醉玲瓏,👍
+user14,皓鑭傳,👍
+user14,鬼怪,👎
+user14,太陽的後裔,👍
+user15,鬼怪,👍
+user15,慶餘年,👍
+user15,來自星星的你,👎
+user16,我的海洋天堂,👍
+user16,皓鑭傳,👎
+user16,醉玲瓏,👍
+user17,太陽的後裔,👍
+user17,鬼怪,👎
+user17,慶餘年,👍
+user18,來自星星的你,👍
+user18,我的海洋天堂,👎
+user18,醉玲瓏,👍
+user19,皓鑭傳,👍
+user19,太陽的後裔,👎
+user19,鬼怪,👍
+user20,慶餘年,👍
+user20,來自星星的你,👎
+user20,我的海洋天堂,👍
+user21,醉玲瓏,👍
+user21,太陽的後裔,👍
+user21,皓鑭傳,👎
+user22,鬼怪,👍
+user22,慶餘年,👎
+user22,來自星星的你,👍
+user23,我的海洋天堂,👍
+user23,醉玲瓏,👎
+user23,太陽的後裔,👍
+user24,慶餘年,👍
+user24,鬼怪,👎
+user24,皓鑭傳,👍
+user25,來自星星的你,👍
+user25,太陽的後裔,👎
+user25,我的海洋天堂,👍
+user26,醉玲瓏,👍
+user26,鬼怪,👍
+user26,慶餘年,👎
+user27,皓鑭傳,👍
+user27,太陽的後裔,👍
+user27,來自星星的你,👎
+user28,我的海洋天堂,👍
+user28,醉玲瓏,👍
+user28,鬼怪,👎
+user29,太陽的後裔,👍
+user29,慶餘年,👎
+user29,皓鑭傳,👍
+user30,來自星星的你,👍
+user30,鬼怪,👎
+user30,我的海洋天堂,👍
+user31,醉玲瓏,👍
+user31,太陽的後裔,👍
+user31,慶餘年,👎
+user32,鬼
+
+
+Reason for Choosing Collaborative Filtering
+We selected collaborative filtering as our recommendation method because it effectively leverages user preferences by finding similarities between users. This approach can recommend items that other users with similar tastes have liked, even without detailed content information. Collaborative filtering is especially useful when item attributes are limited or hard to quantify, making it a flexible and powerful method for personalized recommendations.

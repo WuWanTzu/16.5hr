@@ -1,0 +1,13 @@
+# Recommender System Research Notes
+
+There are two major types of AI recommendation systems:
+
+1. **Content-Based Filtering**
+   - Uses item features (e.g., text, tags) to recommend similar items.
+   - Example: If you like a book about space, you'll get other books about space.
+
+2. **Collaborative Filtering**
+   - Based on user behavior (e.g., ratings, clicks).
+   - Example: Users who liked this book also liked these others.
+
+In this project, we use Content-Based Filtering since we only have book descriptions and no user interaction data.

@@ -1,0 +1,12 @@
+# Recommender System Research
+
+There are two main types of AI recommendation systems:
+
+1. **Content-Based Filtering**
+   - Recommends items similar to what the user liked based on item features.
+   - Example: If you like a crime movie, the system suggests other movies with similar plots or genres.
+
+2. **Collaborative Filtering**
+   - Recommends items based on what similar users liked, relying on large amounts of user data.
+
+In this project, we use Content-Based Filtering because we have no user ratings and rely solely on movie descriptions.

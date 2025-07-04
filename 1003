@@ -1,64 +1,71 @@
-plot
-A retired hitman seeks revenge on those who wronged him.
-A young wizard attends a school of magic while fighting evil.
-A group of friends goes on a road trip across the country.
-A space crew battles aliens to survive.
-A detective solves crimes using brilliant deduction skills.
-Two lovers find each other against all odds.
-A warrior must save the kingdom from an ancient curse.
-An unlikely hero rises to protect their homeland.
-A scientist discovers a new dimension.
-An astronaut stranded on Mars fights for survival.
-A superhero confronts their darkest fears.
-A man wakes up with no memory and a deadly secret.
-A talking dog goes on a journey to find his owner.
-A robot develops emotions and defies its programming.
-A young girl finds a magical world in her closet.
-A king must protect his land from invading forces.
-A teacher inspires students in a troubled neighborhood.
-A boy and his dragon fight to free their people.
-An alien crash-lands and becomes part of a family.
-A spy uncovers a massive conspiracy.
-A woman starts over after losing everything.
-A soldier returns home with haunting memories.
-A sea monster befriends a lonely boy.
-A music prodigy struggles with family pressure.
-An ancient prophecy threatens the modern world.
-A time traveler tries to fix their past mistakes.
-A haunted house reveals its secrets to new owners.
-A vampire seeks redemption in a human world.
-A comedy of errors leads to unexpected romance.
-A baker dreams of winning a national competition.
-A cursed artifact brings terror to its finder.
-A reluctant king rises to the occasion.
-A secret island holds the key to humanity’s future.
-A girl with superpowers runs from a secret agency.
-A documentary filmmaker exposes a hidden truth.
-A ghost helps solve a century-old mystery.
-A cyberpunk hacker battles against corrupt AI.
-A man inherits a zoo and finds new purpose.
-A detective and a ghost team up to fight crime.
-A school is run by magical animals.
-A cursed video game becomes real.
-A boy discovers he’s the last of his kind.
-A forest spirit chooses a new protector.
-A stranded train hides a deadly secret.
-A group of teens start a resistance movement.
-A librarian finds a map to a hidden city.
-A pop star fakes her identity to find peace.
-A guardian angel breaks the rules of heaven.
-A mysterious package changes lives.
-A chef must cook the perfect meal to save a life.
-A family discovers their house is alive.
-A janitor becomes the president by accident.
-A mermaid enters the human world to find love.
-
 from sentence_transformers import SentenceTransformer
 import numpy as np
 
-# 假設你已經有 `plots` 是一個長度 53 的 list
+# 53 筆電影劇情資料
+plots = [
+    "A retired hitman seeks revenge on those who wronged him.",
+    "A young wizard attends a school of magic while fighting evil.",
+    "A group of friends goes on a road trip across the country.",
+    "A space crew battles aliens to survive.",
+    "A detective solves crimes using brilliant deduction skills.",
+    "Two lovers find each other against all odds.",
+    "A warrior must save the kingdom from an ancient curse.",
+    "An unlikely hero rises to protect their homeland.",
+    "A scientist discovers a new dimension.",
+    "An astronaut stranded on Mars fights for survival.",
+    "A superhero confronts their darkest fears.",
+    "A man wakes up with no memory and a deadly secret.",
+    "A talking dog goes on a journey to find his owner.",
+    "A robot develops emotions and defies its programming.",
+    "A young girl finds a magical world in her closet.",
+    "A king must protect his land from invading forces.",
+    "A teacher inspires students in a troubled neighborhood.",
+    "A boy and his dragon fight to free their people.",
+    "An alien crash-lands and becomes part of a family.",
+    "A spy uncovers a massive conspiracy.",
+    "A woman starts over after losing everything.",
+    "A soldier returns home with haunting memories.",
+    "A sea monster befriends a lonely boy.",
+    "A music prodigy struggles with family pressure.",
+    "An ancient prophecy threatens the modern world.",
+    "A time traveler tries to fix their past mistakes.",
+    "A haunted house reveals its secrets to new owners.",
+    "A vampire seeks redemption in a human world.",
+    "A comedy of errors leads to unexpected romance.",
+    "A baker dreams of winning a national competition.",
+    "A cursed artifact brings terror to its finder.",
+    "A reluctant king rises to the occasion.",
+    "A secret island holds the key to humanity’s future.",
+    "A girl with superpowers runs from a secret agency.",
+    "A documentary filmmaker exposes a hidden truth.",
+    "A ghost helps solve a century-old mystery.",
+    "A cyberpunk hacker battles against corrupt AI.",
+    "A man inherits a zoo and finds new purpose.",
+    "A detective and a ghost team up to fight crime.",
+    "A school is run by magical animals.",
+    "A cursed video game becomes real.",
+    "A boy discovers he’s the last of his kind.",
+    "A forest spirit chooses a new protector.",
+    "A stranded train hides a deadly secret.",
+    "A group of teens start a resistance movement.",
+    "A librarian finds a map to a hidden city.",
+    "A pop star fakes her identity to find peace.",
+    "A guardian angel breaks the rules of heaven.",
+    "A mysterious package changes lives.",
+    "A chef must cook the perfect meal to save a life.",
+    "A family discovers their house is alive.",
+    "A janitor becomes the president by accident.",
+    "A mermaid enters the human world to find love."
+]
+
+# 建立嵌入模型
 model = SentenceTransformer("all-MiniLM-L6-v2")
+
+# 將 plot 轉換為嵌入向量
 embeddings = model.encode(plots)
 
-# 儲存
+# 儲存為 .npy 檔案
 np.save("plot_embeddings.npy", embeddings)
+
+print("✅ 嵌入完成，已儲存為 plot_embeddings.npy")
+

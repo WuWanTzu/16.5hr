@@ -1,0 +1,56 @@
+try:
+    df = pd.read_csv("plots.csv")
+except Exception as e:
+    print(f"讀取 CSV 出錯: {e}")
+
+def load_plots(file_path):
+    # 載入並清理資料
+    return list_of_texts
+
+def generate_embeddings(texts, model):
+    # 呼叫 encode
+    return embeddings
+
+def save_embeddings(embeddings, file_path):
+    # np.save
+
+def load_plots(file_path):
+    # 載入並清理資料
+    return list_of_texts
+
+def generate_embeddings(texts, model):
+    # 呼叫 encode
+    return embeddings
+
+def save_embeddings(embeddings, file_path):
+    # np.save
+
+import pandas as pd
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+def load_plots(csv_path):
+    df = pd.read_csv(csv_path)
+    df = df.dropna(subset=["plot"])
+    df = df[df["plot"].str.strip() != ""]
+    return df["plot"].tolist()
+
+def generate_embeddings(texts, model_name="all-MiniLM-L6-v2"):
+    model = SentenceTransformer(model_name)
+    embeddings = model.encode(texts, batch_size=64)
+    return embeddings
+
+def save_embeddings(embeddings, file_path):
+    np.save(file_path, embeddings)
+
+def main():
+    plots = load_plots("plots.csv")
+    embs = generate_embeddings(plots)
+    save_embeddings(embs, "plot_embeddings.npy")
+
+    # 驗證
+    loaded = np.load("plot_embeddings.npy")
+    print(f"Embeddings shape: {loaded.shape}, dtype: {loaded.dtype}")
+
+if __name__ == "__main__":
+    main()

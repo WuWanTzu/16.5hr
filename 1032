@@ -1,22 +1,10 @@
-import pandas as pd
+df = pd.read_csv("plots.csv")
 
-def load_plots(csv_path):
-    df = pd.read_csv(csv_path)
+# 1. 刪除缺失值
+df = df.dropna(subset=["plot"])
 
-    # 1. 刪除 NaN
-    df = df.dropna(subset=["plot"])
+# 2. 去除前後空白，過濾空字串
+df["plot"] = df["plot"].str.strip()
+df = df[df["plot"] != ""]
 
-    # 2. 去除前後空白、並過濾掉全空白的字串
-    df["plot"] = df["plot"].str.strip()
-    df = df[df["plot"] != ""]
-
-    return df["plot"].tolist()
-
-def load_plots_with_fill(csv_path):
-    df = pd.read_csv(csv_path)
-
-    # 將 NaN 填成一個 placeholder 字串
-    df["plot"] = df["plot"].fillna("[MISSING PLOT]")
-    df["plot"] = df["plot"].str.strip()
-    # 如果 placeholder 也不想丟掉，後續可針對這個特殊 embedding 做不同處理
-    return df["plot"].tolist()
+plots = df["plot"].tolist()

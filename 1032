@@ -1,10 +1,5 @@
-df = pd.read_csv("plots.csv")
+# Option 1: 填充空值為空字串，確保所有輸入都是字串
+df['plot'] = df['plot'].fillna('')
 
-# 1. 刪除缺失值
-df = df.dropna(subset=["plot"])
-
-# 2. 去除前後空白，過濾空字串
-df["plot"] = df["plot"].str.strip()
-df = df[df["plot"] != ""]
-
-plots = df["plot"].tolist()
+# Option 2: 移除 'plot' 欄位為空或 NaN 的行
+# df.dropna(subset=['plot'], inplace=True)

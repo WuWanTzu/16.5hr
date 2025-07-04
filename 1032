@@ -1,5 +1,23 @@
-# Option 1: 填充空值為空字串，確保所有輸入都是字串
-df['plot'] = df['plot'].fillna('')
+import numpy as np
 
-# Option 2: 移除 'plot' 欄位為空或 NaN 的行
-# df.dropna(subset=['plot'], inplace=True)
+# 讀取已儲存的 embeddings (N, D)
+embeddings = np.load("plot_embeddings.npy")
+
+# 先把向量做正規化 (normalize)，方便計算 cosine similarity
+norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+embeddings_norm = embeddings / norms
+
+# 計算 cosine similarity 矩陣 (N, N)
+# sim(i,j) = dot(embedding_i, embedding_j)
+cos_sim_matrix = np.dot(embeddings_norm, embeddings_norm.T)
+
+# 對每一筆，找相似度最高的 Top 3（不含自己本身）
+top_k = 3
+N = embeddings.shape[0]
+
+for i in range(N):
+    sim_scores = cos_sim_matrix[i]
+    # 排除自己（相似度 1）
+    sim_scores[i] = -1
+    top_indices = np.argsort(sim_scores)[-top_k:][::-1]  # 取最大 top_k 個
+    print(f"電影 {i} 最相似的 {top_k} 部電影是: {top_indices} 相似度: {sim_scores[top_indices]}")

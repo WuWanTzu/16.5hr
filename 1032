@@ -1,23 +1,61 @@
+import pandas as pd
 import numpy as np
+from sentence_transformers import SentenceTransformer
 
-# 讀取已儲存的 embeddings (N, D)
-embeddings = np.load("plot_embeddings.npy")
+def load_data(csv_path):
+    df = pd.read_csv(csv_path)
+    # 簡單處理缺失值
+    df = df.dropna(subset=["plot", "title"])
+    df["plot"] = df["plot"].str.strip()
+    df = df[df["plot"] != ""]
+    df["title"] = df["title"].str.strip()
+    return df["title"].tolist(), df["plot"].tolist()
 
-# 先把向量做正規化 (normalize)，方便計算 cosine similarity
-norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
-embeddings_norm = embeddings / norms
+def generate_embeddings(texts, model_name="all-MiniLM-L6-v2"):
+    model = SentenceTransformer(model_name)
+    embeddings = model.encode(texts, batch_size=64, show_progress_bar=True)
+    return embeddings
 
-# 計算 cosine similarity 矩陣 (N, N)
-# sim(i,j) = dot(embedding_i, embedding_j)
-cos_sim_matrix = np.dot(embeddings_norm, embeddings_norm.T)
+def normalize_embeddings(embeddings):
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+    return embeddings / norms
 
-# 對每一筆，找相似度最高的 Top 3（不含自己本身）
-top_k = 3
-N = embeddings.shape[0]
+def build_similarity_matrix(embeddings_norm):
+    return np.dot(embeddings_norm, embeddings_norm.T)
 
-for i in range(N):
-    sim_scores = cos_sim_matrix[i]
-    # 排除自己（相似度 1）
-    sim_scores[i] = -1
-    top_indices = np.argsort(sim_scores)[-top_k:][::-1]  # 取最大 top_k 個
-    print(f"電影 {i} 最相似的 {top_k} 部電影是: {top_indices} 相似度: {sim_scores[top_indices]}")
+def find_movie_index(titles, movie_name):
+    try:
+        return titles.index(movie_name)
+    except ValueError:
+        return -1
+
+def recommend_movies(sim_matrix, titles, movie_index, top_k=3):
+    sim_scores = sim_matrix[movie_index].copy()
+    sim_scores[movie_index] = -1  # 排除自己
+    top_indices = np.argsort(sim_scores)[-top_k:][::-1]
+    results = [(titles[idx], sim_scores[idx]) for idx in top_indices]
+    return results
+
+def main():
+    csv_path = "plots.csv"
+    titles, plots = load_data(csv_path)
+    embeddings = generate_embeddings(plots)
+    embeddings_norm = normalize_embeddings(embeddings)
+    sim_matrix = build_similarity_matrix(embeddings_norm)
+
+    while True:
+        movie_name = input("請輸入電影名稱 (或輸入 q 離開): ").strip()
+        if movie_name.lower() == "q":
+            break
+        idx = find_movie_index(titles, movie_name)
+        if idx == -1:
+            print(f"找不到電影「{movie_name}」，請確認名稱是否正確。")
+            continue
+        recommendations = recommend_movies(sim_matrix, titles, idx, top_k=3)
+        print(f"\n電影『{movie_name}』的 Top 3 相似電影推薦：")
+        for title, score in recommendations:
+            print(f"  - {title} (相似度: {score:.4f})")
+        print()
+
+if __name__ == "__main__":
+    main()
